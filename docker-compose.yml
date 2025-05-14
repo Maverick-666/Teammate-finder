@@ -1,0 +1,20 @@
+
+services:
+  db:
+    image: mysql:8.0 # 使用官方的 MySQL 8.0 镜像，你也可以选择其他版本
+    container_name: Teammate_finder # 给容器起个名字
+    restart: always # 容器挂了自动重启
+    environment:
+      MYSQL_ROOT_PASSWORD: 88888888 # 设置 root 用户密码，务必修改！
+      MYSQL_DATABASE: teammate_finder_db # 初始化时创建的数据库名
+      MYSQL_USER: teammate_user # 为应用创建的数据库用户名
+      MYSQL_PASSWORD: 88888888 # 应用数据库用户的密码，务必修改！
+    ports:
+      - "3306:3306" # 将主机的 3306 端口映射到容器的 3306 端口
+    volumes:
+      - mysql_data:/var/lib/mysql # 数据持久化，防止容器删除数据丢失
+      # 可选：如果你有初始化SQL脚本，可以挂载
+      # - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+
+volumes:
+  mysql_data: # 定义一个具名数据卷
